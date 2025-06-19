@@ -1,3 +1,4 @@
+import sys
 from stats import convert_words_to_num, count_characters, sort_dict
 
 def get_book_text(filepath):
@@ -5,11 +6,10 @@ def get_book_text(filepath):
 		file_contents = f.read()
 	return file_contents
 
-def main():
+def main(filepath):
 	print(f'============ BOOKBOT ============')
-	book_path = 'books/frankenstein.txt'
-	book_text = get_book_text(book_path)
-	print(f'Analyzing book found at {book_path}...')
+	book_text = get_book_text(filepath)
+	print(f'Analyzing book found at {filepath}...')
 	print(f'----------- Word Count ----------')
 	num_words = convert_words_to_num(book_text)
 	print(f'Found {num_words} total words')
@@ -22,8 +22,13 @@ def main():
 		char = dict_item['char']
 		num = dict_item['num']
 		if char.isalpha():		    
-			print(f"{char}: {num}")
+			print(f'{char}: {num}')
 	print(f'============= END ===============')
 
-
-main()
+if __name__ == '__main__':
+	if len(sys.argv) != 2:
+		print(f'Usage: python3 main.py <path_to_book>')
+		sys.exit(1)
+	else:
+		filepath = sys.argv[1]
+		main(filepath)
